@@ -43,15 +43,7 @@ Scanner::~Scanner()
 void Scanner::start()
 {
   if (recInProgress_) { return; }
-  
-  recInProgress_ = true;
-  thr = new std::thread([&] {
-    while (recInProgress_) {
-      std::chrono::milliseconds time(50);
-      std::this_thread::sleep_for(time);
-      processFrames();
-    }
-  });
+
   // Reset reconstruction's parameters
   delete reconstruction_.load();
   ReconstructionParams parameters(numSensor_);
@@ -68,6 +60,13 @@ void Scanner::start()
 
   reconstruction_ = new Reconstruction(parameters);
   recInProgress_ = true;
+  thr = new std::thread([&] {
+    while (recInProgress_) {
+      std::chrono::milliseconds time(50);
+      std::this_thread::sleep_for(time);
+      processFrames();
+    }
+  });
 }
 
 void Scanner::stop()
