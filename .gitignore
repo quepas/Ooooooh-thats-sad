@@ -4,3 +4,13 @@ CMakeScripts
 Makefile
 cmake_install.cmake
 install_manifest.txt
+
+# MSVC files
+*.vcxproj*
+Debug/
+Release/
+*.dir/
+*.opensdf
+*.sln
+*.suo
+*.sdf
